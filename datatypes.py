@@ -6,6 +6,6 @@ print(type(x))
 x = "Hello World"
 print(type(x)) 
 
-#3
+#3b
 x = 20.5
 print(type(x)) 

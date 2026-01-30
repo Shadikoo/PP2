@@ -18,6 +18,6 @@ print(a)
 a = "Hello, World!"
 print(a[1])
 
-#5
+#5//.
 for x in "banana":
   print(x)

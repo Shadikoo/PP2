@@ -7,7 +7,7 @@ elif a == b:
   print("a and b are equal")
 else:
   print("a is greater than b")
-
+ 
 #2
   a = 200
 b = 33

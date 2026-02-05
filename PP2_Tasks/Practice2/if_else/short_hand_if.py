@@ -18,7 +18,7 @@ print("Bigger is", bigger)
 a = 330
 b = 330
 print("A") if a > b else print("=") if a == b else print("B")
-
+ 
 #5
 x = 15
 y = 20

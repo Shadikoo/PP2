@@ -4,4 +4,4 @@ for x in fruits:
     continue
   print(x)
 
-  
+   

@@ -106,3 +106,10 @@ p1 = Person("Emil")
 del Person.greet
 
 p1.greet() # This will cause an error 
+
+
+number = [1, 2, 3, 4 ,5]
+squeres = list (map(lambda x: x**2, numbers))
+pribt(squeres)
+def  squer(x):
+     return x**2

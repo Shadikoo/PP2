@@ -2,7 +2,7 @@ import csv
 from connect import open_connection
 
 
-# ✅ CREATE TABLE
+# CREATE TABLE
 def create_phonebook_table():
     sql = """
     CREATE TABLE IF NOT EXISTS contacts (
@@ -24,7 +24,7 @@ def create_phonebook_table():
     print("Table created.")
 
 
-# ✅ INSERT FROM CONSOLE
+#  INSERT FROM CONSOLE
 def add_contact():
     name = input("Enter name: ")
     phone = input("Enter phone: ")
@@ -46,7 +46,7 @@ def add_contact():
     conn.close()
 
 
-# ✅ INSERT FROM CSV
+#  INSERT FROM CSV
 def load_from_csv():
     conn = open_connection()
     cur = conn.cursor()
@@ -74,7 +74,7 @@ def load_from_csv():
     conn.close()
 
 
-# ✅ SELECT
+# SELECT
 def show_contacts():
     conn = open_connection()
     cur = conn.cursor()
@@ -92,7 +92,7 @@ def show_contacts():
     conn.close()
 
 
-# ✅ SEARCH BY NAME
+# SEARCH BY NAME
 def search_by_name():
     name = input("Enter name to search: ")
 
@@ -116,7 +116,7 @@ def search_by_name():
     conn.close()
 
 
-# ✅ SEARCH BY PHONE PREFIX
+#  SEARCH BY PHONE PREFIX
 def search_by_phone():
     prefix = input("Enter phone prefix: ")
 
@@ -140,7 +140,7 @@ def search_by_phone():
     conn.close()
 
 
-# ✅ UPDATE (NAME OR PHONE)
+#  UPDATE (NAME OR PHONE)
 def edit_contact():
     print("1. Change name")
     print("2. Change phone")
@@ -188,7 +188,7 @@ def edit_contact():
     conn.close()
 
 
-# ✅ DELETE
+#  DELETE
 def remove_contact():
     print("1. Delete by name")
     print("2. Delete by phone")
@@ -226,7 +226,7 @@ def remove_contact():
     conn.close()
 
 
-# ✅ MENU
+#  MENU
 def menu():
     while True:
         print("\n--- PHONEBOOK ---")
@@ -265,5 +265,5 @@ def menu():
             print("Invalid choice.")
 
 
-# 🚀 RUN
+#  RUN
 menu()

@@ -21,7 +21,16 @@ colors = [
     (255, 255, 0)
 ]
 
-tools = ["brush", "rect", "square", "right tri", "eq tri", "rhombus", "eraser", "clear"]
+tools = [
+    "brush",
+    "rect",
+    "square",
+    "right tri",
+    "eq tri",
+    "rhombus",
+    "eraser",
+    "clear"
+]
 
 current_color = BLACK
 current_tool = "brush"
@@ -73,8 +82,14 @@ while running:
     mouse_x, mouse_y = pygame.mouse.get_pos()
     canvas_pos = (mouse_x, mouse_y - TOOLBAR)
 
-    # Preview
-    if drawing and current_tool in ["rect", "square", "right tri", "eq tri", "rhombus"]:
+    # Preview while drawing
+    if drawing and current_tool in [
+        "rect",
+        "square",
+        "right tri",
+        "eq tri",
+        "rhombus"
+    ]:
         preview = canvas.copy()
 
         x1, y1 = start_pos
@@ -87,38 +102,52 @@ while running:
             abs(y2 - y1)
         )
 
-        # RECT
+        # Rectangle
         if current_tool == "rect":
             pygame.draw.rect(preview, current_color, rect, 3)
 
-        # SQUARE
+        # Square
         if current_tool == "square":
             size = min(rect.width, rect.height)
             rect.width = size
             rect.height = size
             pygame.draw.rect(preview, current_color, rect, 3)
 
-        # RIGHT TRIANGLE (FIXED)
+        # Right triangle
         if current_tool == "right tri":
             p1 = (x1, y1)
             p2 = (x2, y1)
             p3 = (x1, y2)
             pygame.draw.polygon(preview, current_color, [p1, p2, p3], 3)
 
-        # EQUILATERAL TRIANGLE
+        # Equilateral triangle (up/down by mouse)
         if current_tool == "eq tri":
-            p1 = (rect.centerx, rect.top)
-            p2 = (rect.left, rect.bottom)
-            p3 = (rect.right, rect.bottom)
+
+            if y2 > y1:   # mouse below -> triangle down
+                p1 = (rect.left, rect.top)
+                p2 = (rect.right, rect.top)
+                p3 = (rect.centerx, rect.bottom)
+
+            else:         # mouse above -> triangle up
+                p1 = (rect.centerx, rect.top)
+                p2 = (rect.left, rect.bottom)
+                p3 = (rect.right, rect.bottom)
+
             pygame.draw.polygon(preview, current_color, [p1, p2, p3], 3)
 
-        # RHOMBUS
+        # Rhombus
         if current_tool == "rhombus":
             p1 = (rect.centerx, rect.top)
             p2 = (rect.right, rect.centery)
             p3 = (rect.centerx, rect.bottom)
             p4 = (rect.left, rect.centery)
-            pygame.draw.polygon(preview, current_color, [p1, p2, p3, p4], 3)
+
+            pygame.draw.polygon(
+                preview,
+                current_color,
+                [p1, p2, p3, p4],
+                3
+            )
 
         screen.blit(preview, (0, TOOLBAR))
 
@@ -132,6 +161,7 @@ while running:
             if event.button == 1:
                 mouse_x, mouse_y = event.pos
 
+                # Click on toolbar
                 if mouse_y < TOOLBAR:
 
                     x = 10
@@ -146,6 +176,7 @@ while running:
 
                         x += 90
 
+                    # Color buttons
                     x = 740
                     for color in colors:
                         color_button = pygame.Rect(x, 25, 35, 35)
@@ -155,6 +186,7 @@ while running:
 
                         x += 45
 
+                # Start drawing on canvas
                 else:
                     drawing = True
                     start_pos = (mouse_x, mouse_y - TOOLBAR)
@@ -168,11 +200,25 @@ while running:
                 if mouse_y > TOOLBAR:
                     new_pos = (mouse_x, mouse_y - TOOLBAR)
 
+                    # Brush
                     if current_tool == "brush":
-                        pygame.draw.line(canvas, current_color, last_pos, new_pos, 5)
+                        pygame.draw.line(
+                            canvas,
+                            current_color,
+                            last_pos,
+                            new_pos,
+                            5
+                        )
 
+                    # Eraser
                     if current_tool == "eraser":
-                        pygame.draw.line(canvas, WHITE, last_pos, new_pos, 25)
+                        pygame.draw.line(
+                            canvas,
+                            WHITE,
+                            last_pos,
+                            new_pos,
+                            25
+                        )
 
                     last_pos = new_pos
 
@@ -192,34 +238,63 @@ while running:
                     abs(y2 - y1)
                 )
 
+                # Rectangle
                 if current_tool == "rect":
                     pygame.draw.rect(canvas, current_color, rect, 3)
 
+                # Square
                 if current_tool == "square":
                     size = min(rect.width, rect.height)
                     rect.width = size
                     rect.height = size
                     pygame.draw.rect(canvas, current_color, rect, 3)
 
-                # RIGHT TRIANGLE (FIXED)
+                # Right triangle
                 if current_tool == "right tri":
                     p1 = (x1, y1)
                     p2 = (x2, y1)
                     p3 = (x1, y2)
-                    pygame.draw.polygon(canvas, current_color, [p1, p2, p3], 3)
 
+                    pygame.draw.polygon(
+                        canvas,
+                        current_color,
+                        [p1, p2, p3],
+                        3
+                    )
+
+                # Equilateral triangle (up/down)
                 if current_tool == "eq tri":
-                    p1 = (rect.centerx, rect.top)
-                    p2 = (rect.left, rect.bottom)
-                    p3 = (rect.right, rect.bottom)
-                    pygame.draw.polygon(canvas, current_color, [p1, p2, p3], 3)
 
+                    if y2 > y1:
+                        p1 = (rect.left, rect.top)
+                        p2 = (rect.right, rect.top)
+                        p3 = (rect.centerx, rect.bottom)
+
+                    else:
+                        p1 = (rect.centerx, rect.top)
+                        p2 = (rect.left, rect.bottom)
+                        p3 = (rect.right, rect.bottom)
+
+                    pygame.draw.polygon(
+                        canvas,
+                        current_color,
+                        [p1, p2, p3],
+                        3
+                    )
+
+                # Rhombus
                 if current_tool == "rhombus":
                     p1 = (rect.centerx, rect.top)
                     p2 = (rect.right, rect.centery)
                     p3 = (rect.centerx, rect.bottom)
                     p4 = (rect.left, rect.centery)
-                    pygame.draw.polygon(canvas, current_color, [p1, p2, p3, p4], 3)
+
+                    pygame.draw.polygon(
+                        canvas,
+                        current_color,
+                        [p1, p2, p3, p4],
+                        3
+                    )
 
                 drawing = False
 
